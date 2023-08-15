@@ -17,7 +17,6 @@ const haibunFunctionPocOrchestrator: OrchestrationHandler = function* (context: 
 
     return outputs;
 };
-
 df.app.orchestration('haibunFunctionPocOrchestrator', haibunFunctionPocOrchestrator);
 
 df.app.activity(activityName, { handler: haibunFunctionPoc });

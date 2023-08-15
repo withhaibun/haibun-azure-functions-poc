@@ -8,14 +8,21 @@
     "watch": "tsc -w",
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
-    "start": "concurrently --kill-others  \"func start --verbose\"",
+    "start": "func start --verbose",
+    "stack": "concurrently --kill-others \"npm run start-azureite\" \"npm run start-testserver\" \"func start --verbose\"",
     "test": "echo \"No tests yet...\"",
     "start-azureite": "azurite --location /tmp/azurite --debug /tmp/azurite/debug.log --blobHost",
+    "start-testserver": "http-server . --port 9023",
     "start-silent-azureite": "azurite-blob --silent --location /tmp/azurite --debug /tmp/azurite/debug.log --blobHost"
   },
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.7",
+    "@haibun/core": "^1.29.1",
+    "@haibun/domain-storage": "^1.29.1",
+    "@haibun/storage-fs": "^1.29.1",
+    "@haibun/web-playwright": "^1.29.1",
     "durable-functions": "^3.0.0-alpha.5",
+    "http-server": "^14.1.1",
     "playwright": "^1.37.0"
   },
   "devDependencies": {
