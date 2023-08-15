@@ -1,0 +1,30 @@
+{
+  "name": "haibun-azure-functions-mqtt-poc",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf dist",
+    "prestart": "npm run clean && npm run build",
+    "start": "concurrently --kill-others  \"func start --verbose\"",
+    "test": "echo \"No tests yet...\"",
+    "start-azureite": "azurite --location /tmp/azurite --debug /tmp/azurite/debug.log --blobHost",
+    "start-silent-azureite": "azurite-blob --silent --location /tmp/azurite --debug /tmp/azurite/debug.log --blobHost"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0-alpha.7",
+    "durable-functions": "^3.0.0-alpha.5",
+    "playwright": "^1.37.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "azure-functions-core-tools": "^4.0.5198",
+    "azurite": "^3.25.1",
+    "concurrently": "^8.2.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^4.0.0"
+  },
+  "main": "dist/src/functions/*.js"
+}
