@@ -7,7 +7,7 @@
     "watch": "tsc -w",
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
-    "start": "./env.sh && func start",
+    "start": ". ./env.sh && func start",
     "stack": "concurrently --kill-others \"npm run start-azureite\" \"npm run start-testserver\" \"func start --verbose\"",
     "test": "echo \"No tests yet...\"",
     "start-azureite": "azurite --location /tmp/azurite --debug /tmp/azurite/debug.log",
@@ -23,5 +23,5 @@
     "rimraf": "^5.0.0",
     "typescript": "^4.0.0"
   },
-  "main": "dist/src/functions/*.js"
+  "main": "dist/functions/*.js"
 }

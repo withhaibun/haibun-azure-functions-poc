@@ -11,7 +11,7 @@ const haibunFunctionPocOrchestrator: OrchestrationHandler = function* (context: 
     for (let batch = 0; batch < 2; batch++) {
         const tasks = [];
         for (let instance = 0; instance < 2; instance++) {
-            tasks.push(context.df.callActivity(activityName, { batch, instance }));
+            tasks.push(context.df.callActivity(activityName, { batch, instance, target }));
         }
         outputs = [...outputs, yield context.df.Task.all(tasks)];
     }
