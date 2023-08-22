@@ -6,9 +6,9 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "clean": "rimraf dist",
+    "clean": "rm -rf dist",
     "prestart": "npm run clean && npm run build",
-    "start": ". ./env.sh && func start --verbose",
+    "start": "func start --verbose",
     "stack": "concurrently --kill-others \"npm run start-azureite\" \"npm run start-testserver\" \"func start --verbose\"",
     "test": "echo \"No tests yet...\"",
     "start-azureite": "azurite --location /tmp/azurite --debug /tmp/azurite/debug.log --blobHost",
@@ -30,7 +30,6 @@
     "azure-functions-core-tools": "^4.0.5198",
     "azurite": "^3.25.1",
     "concurrently": "^8.2.0",
-    "rimraf": "^5.0.0",
     "typescript": "^5.1.3"
   }
 }
