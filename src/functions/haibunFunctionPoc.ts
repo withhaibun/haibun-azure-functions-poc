@@ -8,9 +8,9 @@ const target = process.env.TEST_TARGET;
 
 const haibunFunctionPocOrchestrator: OrchestrationHandler = function* (context: OrchestrationContext) {
     let outputs = [];
-    for (let batch = 0; batch < 1; batch++) {
+    for (let batch = 0; batch < 2; batch++) {
         const tasks = [];
-        for (let instance = 0; instance < 1; instance++) {
+        for (let instance = 0; instance < 2; instance++) {
             tasks.push(context.df.callActivity(activityName, { batch, instance }));
         }
         outputs = [...outputs, yield context.df.Task.all(tasks)];
