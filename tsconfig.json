@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
+    "module": "nodenext",
+    "target": "ESNext",
     "outDir": "dist",
     "rootDir": "src",
     "sourceMap": true,

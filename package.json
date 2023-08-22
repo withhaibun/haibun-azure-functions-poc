@@ -1,5 +1,6 @@
 {
-  "name": "wooc",
+  "type": "module",
+  "name": "haibun-azure-function-poc",
   "version": "0.0.1",
   "description": "",
   "scripts": {
@@ -16,7 +17,14 @@
   },
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.7",
-    "durable-functions": "^3.0.0-alpha.5"
+    "@haibun/azure": "^1.29.1",
+    "@haibun/core": "^1.29.2",
+    "@haibun/domain-storage": "^1.29.2",
+    "@haibun/domain-webpage": "^1.29.2",
+    "@haibun/storage-fs": "^1.29.2",
+    "@haibun/web-playwright": "^1.29.2",
+    "durable-functions": "^3.0.0-alpha.5",
+    "http-server": "^14.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.x",
