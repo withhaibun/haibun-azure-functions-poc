@@ -3,7 +3,7 @@
   "logging": {
     "applicationInsights": {
       "samplingSettings": {
-        "isEnabled": false,
+        "isEnabled": true,
         "excludedTypes": "Request"
       }
     }
@@ -15,7 +15,7 @@
   "extensions": {
     "durableTask": {
       "storageProvider": {
-        "connectionStringName": "AzureWebJobsStorage"
+        "type": "AzureStorage"
       }
     }
   }
