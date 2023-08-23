@@ -8,15 +8,20 @@ const target = process.env.TEST_TARGET;
 
 const haibunFunctionPocOrchestrator: OrchestrationHandler = function* (context: OrchestrationContext) {
     let outputs = [];
-    for (let batch = 0; batch < 2; batch++) {
+    const batches = 2;
+    const instances = 2;
+    for (let batch = 0; batch < batches; batch++) {
         const tasks = [];
-        for (let instance = 0; instance < 1; instance++) {
+        for (let instance = 0; instance < instances; instance++) {
             tasks.push(context.df.callActivity(activityName, { batch, instance, target }));
         }
-        outputs = [...outputs, yield context.df.Task.all(tasks)];
+        const results = yield context.df.Task.all(tasks);
+        outputs = [...outputs, results];
     }
 
-    return outputs;
+    const total = batches * instances;
+    const totalDuration = outputs.reduce((a, o) => a + o[0].duration, 0);
+    return [outputs, { totalDuration, total, average: totalDuration / total }];
 };
 df.app.orchestration('haibunFunctionPocOrchestrator', haibunFunctionPocOrchestrator);
 
