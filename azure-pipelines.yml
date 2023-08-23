@@ -48,12 +48,6 @@ stages:
         downloadType: 'single'
         artifactName: 'deploy'
         downloadPath: '$(Build.ArtifactStagingDirectory)'
-    - task: ExtractFiles@1
-      inputs:
-        archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/*.zip'
-        destinationFolder: '$(Build.SourcesDirectory)'
-        cleanDestinationFolder: false
-        overwriteExistingFiles: false
     - task: AzureCLI@2
 
       env:
