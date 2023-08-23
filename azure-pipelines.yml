@@ -27,8 +27,9 @@ stages:
   jobs:
 
   - job: Deploy
-  
+
     steps:  
+    - checkout: none
     - task: Bash@3
       env:
         AZURE_SUBSCRIPTION: 'dgcx-gccollab'
@@ -38,6 +39,7 @@ stages:
         FUNCTION_APP_NAME: 'dev-haibun-gccollab' 
       inputs:
         script: |
-          
+          ls
+          pwd
           az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src ./deploy.zip
       displayName: 'Deploy to Azure Function App'
