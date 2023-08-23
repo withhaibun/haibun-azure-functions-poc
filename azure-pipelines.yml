@@ -52,7 +52,7 @@ stages:
     - task: AzureFunctionApp@2
       inputs:
         connectedServiceNameARM: 'dgcx_dev_appreg_serviceconnection_collab-resources'
-        appType: 'functionAppLinux'
+        appType: functionApp
         appName: 'dev-haibun-gccollab'
         package: '$(System.DefaultWorkingDirectory)/**/*.zip'
         runtimeStack: 'NODE|18'
