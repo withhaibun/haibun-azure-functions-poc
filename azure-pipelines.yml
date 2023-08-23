@@ -27,7 +27,8 @@ stages:
 
     steps:  
     - checkout: none
-    - task: Bash@3
+    - task: AzureCLI@2
+
       env:
         AZURE_SUBSCRIPTION: 'dgcx-gccollab'
         LOC: 'Canada Central'
@@ -35,9 +36,11 @@ stages:
         MY_RESOURCE_GROUP: 'rg-gctools-managedServices-dev'
         FUNCTION_APP_NAME: 'dev-haibun-gccollab' 
       inputs:
-        targetType: inline
-        script: |
+        azureSubscription: 'dgcx_dev_appreg_serviceconnection_collab-resources'
+        scriptType: bash
+        scriptLocation: 'inlineScript'
+        inlineScript: |
           ls
           pwd
-          az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src ./deploy.zip
+          az functionapp deployment source config-zip --resource-group $env:MY_RESOURCE_GROUP --name $env:FUNCTION_APP_NAME --src ./deploy.zip
       displayName: 'Deploy to Azure Function App'
