@@ -23,6 +23,7 @@
     "@haibun/domain-webpage": "^1.29.2",
     "@haibun/storage-fs": "^1.29.2",
     "@haibun/web-playwright": "^1.29.2",
+    "azurite": "^3.26.0",
     "durable-functions": "^3.0.0-alpha.5",
     "http-server": "^14.1.1"
   },
