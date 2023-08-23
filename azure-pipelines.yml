@@ -47,7 +47,7 @@ stages:
         buildType: 'current'
         downloadType: 'single'
         artifactName: 'deploy'
-        downloadPath: '$(Build.ArtifactStagingDirectory)'
+        downloadPath: '$(Build.SourcesDirectory)'
     - task: AzureCLI@2
 
       env:
