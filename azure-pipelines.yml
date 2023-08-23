@@ -20,7 +20,7 @@ stages:
       displayName: 'Build and Package'
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(Build.SourceDirectory)/dist'
+        rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/deploy.zip'
