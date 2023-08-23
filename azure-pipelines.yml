@@ -56,7 +56,7 @@ stages:
         appName: 'dev-haibun-gccollab'
         package: '$(System.DefaultWorkingDirectory)/**/*.zip'
         runtimeStack: 'NODE|18'
-        deploymentMethod: 'zipDeploy'
+        deploymentMethod: 'runFromPackage'
       displayName: 'Deploy to Azure Function App'
     
     
