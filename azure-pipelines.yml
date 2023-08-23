@@ -13,6 +13,7 @@ stages:
     steps:
     - checkout: self
     - task: UseNode@1
+
       inputs:
         version: '18.x'
     - script: |
@@ -22,10 +23,21 @@ stages:
       displayName: 'Build and Package'
 
 - stage: Deploy
+
   jobs:
+
   - job: Deploy
-    steps:
-    - script: |
-        source env.sh
-        az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src ./deploy.zip
+  
+    steps:  
+    - task: Bash@3
+      env:
+        AZURE_SUBSCRIPTION: 'dgcx-gccollab'
+        LOC: 'Canada Central'
+        MY_STORAGE_ACCOUNT: 'devdatastorageacc'
+        MY_RESOURCE_GROUP: 'rg-gctools-managedServices-dev'
+        FUNCTION_APP_NAME: 'dev-haibun-gccollab' 
+      inputs:
+        script: |
+          
+          az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src ./deploy.zip
       displayName: 'Deploy to Azure Function App'
