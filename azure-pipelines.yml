@@ -42,5 +42,5 @@ stages:
         inlineScript: |
           ls
           pwd
-          az functionapp deployment source config-zip --resource-group $env:MY_RESOURCE_GROUP --name $env:FUNCTION_APP_NAME --src ./deploy.zip
+          az functionapp deployment source config-zip --resource-group $($env:MY_RESOURCE_GROUP) --name $($env:FUNCTION_APP_NAME) --src ./deploy.zip
       displayName: 'Deploy to Azure Function App'
