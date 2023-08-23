@@ -48,21 +48,15 @@ stages:
         downloadType: 'single'
         artifactName: 'deploy'
         downloadPath: '$(Build.SourcesDirectory)'
-    - task: AzureCLI@2
-
-      env:
-        AZURE_SUBSCRIPTION: 'dgcx-gccollab'
-        LOC: 'Canada Central'
-        MY_STORAGE_ACCOUNT: 'devdatastorageacc'
-        MY_RESOURCE_GROUP: 'rg-gctools-managedServices-dev'
-        FUNCTION_APP_NAME: 'dev-haibun-gccollab' 
+      displayName: Download Artifacts
+    - task: AzureFunctionApp@2
       inputs:
-        azureSubscription: 'dgcx_dev_appreg_serviceconnection_collab-resources'
-        scriptType: bash
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          ls
-          az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src ./deploy.zip
+        connectedServiceNameARM: 'dgcx_dev_appreg_serviceconnection_collab-resources'
+        appType: 'functionAppLinux'
+        appName: 'dev-haibun-gccollab'
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        runtimeStack: 'NODE|18'
+        deploymentMethod: 'zipDeploy'
       displayName: 'Deploy to Azure Function App'
     
     
