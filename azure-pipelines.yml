@@ -26,6 +26,12 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/deploy.zip'
         replaceExistingArchive: true
       displayName: Archive build
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/deploy.zip'
+        artifact: 'deploy'
+        publishLocation: 'pipeline'
+    
 
 
 - stage: Deploy
@@ -36,6 +42,12 @@ stages:
 
     steps:  
     - checkout: none
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'deploy'
+        downloadPath: '$(System.SourcesDirectory)'
     - task: AzureCLI@2
 
       env:
@@ -51,7 +63,7 @@ stages:
         inlineScript: |
           ls
           pwd
-          az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src $(Build.ArtifactStagingDirectory)/deploy.zip
+          az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src ./deploy.zip
       displayName: 'Deploy to Azure Function App'
     
     
