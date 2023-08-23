@@ -52,7 +52,7 @@ stages:
       inputs:
         archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/*.zip'
         destinationFolder: '$(Build.SourcesDirectory)'
-        cleanDestinationFolder: true
+        cleanDestinationFolder: false
         overwriteExistingFiles: false
     - task: AzureCLI@2
 
@@ -67,7 +67,7 @@ stages:
         scriptType: bash
         scriptLocation: 'inlineScript'
         inlineScript: |
-     
+          ls
           az functionapp deployment source config-zip --resource-group $MY_RESOURCE_GROUP --name $FUNCTION_APP_NAME --src ./deploy.zip
       displayName: 'Deploy to Azure Function App'
     
