@@ -1,19 +1,19 @@
 import { app, HttpHandler, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
 import { OrchestrationContext, OrchestrationHandler } from 'durable-functions';
-import { haibunPlaywrightActivity } from './haibunPlaywrightActivity.js';
+import { haibunPlaywrightActivity, TActionResult } from './haibunPlaywrightActivity.js';
 
 const activityName = 'haibunFunctionPoc';
-const target = process.env.TEST_TARGET;
+const host = process.env.TEST_HOST;
+const batches = parseInt(process.env.TEST_BATCHES);
+const instances = parseInt(process.env.TEST_INSTANCES);
 
 const haibunFunctionPocOrchestrator: OrchestrationHandler = function* (context: OrchestrationContext) {
-    let outputs = [];
-    const batches = 2;
-    const instances = 2;
+    let outputs: TActionResult[] = [];
     for (let batch = 0; batch < batches; batch++) {
         const tasks = [];
         for (let instance = 0; instance < instances; instance++) {
-            tasks.push(context.df.callActivity(activityName, { batch, instance, target }));
+            tasks.push(context.df.callActivity(activityName, { batch, instance, content: `using firefox browser\ngo to the "${host}/home.html?${batch}-${instance}" webpage\nClick on dest\nBe on the ${host}/dest.html?${batch}-${instance} webpage` }));
         }
         const results = yield context.df.Task.all(tasks);
         outputs = [...outputs, results];

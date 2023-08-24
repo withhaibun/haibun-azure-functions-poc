@@ -1,20 +1,23 @@
 import { ActivityHandler } from 'durable-functions';
 
-import { chromium, devices } from 'playwright';
+import WebPlaywright from '@haibun/web-playwright';
+import { testWithDefaults } from '@haibun/core/build/lib/test/lib.js'
+import DomainStorage from '@haibun/domain-storage/build/domain-storage.js';
+import StorageFS from '@haibun/storage-fs/build/storage-fs.js';
+import DomainWebPage from '@haibun/domain-webpage/build/domain-webpage.js';
+import { TExecutorResult } from '@haibun/core/build/lib/defs.js';
 
-export const haibunPlaywrightActivity: ActivityHandler = async ({ batch, instance, target }: { batch: number, instance: number, target: string }): Promise<any> => {
+export type TActionResult = { ok: true | false, batch: number, instance: number, result: Partial<TExecutorResult>, duration: number };
+
+export const haibunPlaywrightActivity: ActivityHandler = async ({ batch, instance, content }: { batch: number, instance: number, content: string }): Promise<TActionResult> => {
+    const feature = { path: '/features/test.feature', content };
     const start = new Date().getTime();
-    let failure;
-    try {
-        const browser = await chromium.launch();
-        const context = await browser.newContext(devices['iPhone 11']);
-        const page = await context.newPage();
-
-        await page.goto(`${target}?${batch}-${instance}`);
-    } catch (e) {
-        failure = e;
-        console.log('oops', e)
-    }
-
-    return { ok: true, batch, instance, failure, duration: new Date().getTime() - start };
+    const result = await testWithDefaults([feature], [WebPlaywright, DomainStorage, DomainWebPage, StorageFS], {
+        options: { DEST: 'poc', },
+        extraOptions: {
+            HAIBUN_O_WEBPLAYWRIGHT_STORAGE: 'StorageFS',
+        },
+    });
+    // fixme use timing from results
+    return { ok: result.ok, batch, instance, result: { featureResults: result.featureResults, failure: result.failure }, duration: new Date().getTime() - start };
 };
