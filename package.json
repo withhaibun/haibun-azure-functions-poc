@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "haibun-azure-function-poc",
-  "version": "1.30.2",
+  "version": "1.30.3",
   "description": "",
   "scripts": {
     "build": "tsc",
@@ -18,12 +18,12 @@
   },
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.7",
-    "@haibun/azure": "1.30.2",
-    "@haibun/core": "1.30.2",
-    "@haibun/domain-storage": "1.30.2",
-    "@haibun/domain-webpage": "1.30.2",
-    "@haibun/storage-fs": "1.30.2",
-    "@haibun/web-playwright": "1.30.2",
+    "@haibun/azure": "1.30.3",
+    "@haibun/core": "1.30.3",
+    "@haibun/domain-storage": "1.30.3",
+    "@haibun/domain-webpage": "1.30.3",
+    "@haibun/storage-fs": "1.30.3",
+    "@haibun/web-playwright": "1.30.3",
     "azure-functions-core-tools": "^4.0.5274",
     "azurite": "^3.26.0",
     "concurrently": "^8.2.1",
