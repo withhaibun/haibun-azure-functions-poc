@@ -10,6 +10,7 @@ import { TExecutorResult } from '@haibun/core/build/lib/defs.js';
 export type TActionResult = { ok: true | false, batch: number, instance: number, result: Partial<TExecutorResult>, duration: number };
 
 export const haibunPlaywrightActivity: ActivityHandler = async ({ batch, instance, content }: { batch: number, instance: number, content: string }): Promise<TActionResult> => {
+    try {
     const feature = { path: '/features/test.feature', content };
     const start = new Date().getTime();
     const result = await testWithDefaults([feature], [WebPlaywright, DomainStorage, DomainWebPage, StorageFS], {
@@ -20,4 +21,7 @@ export const haibunPlaywrightActivity: ActivityHandler = async ({ batch, instanc
     });
     // fixme use timing from results
     return { ok: result.ok, batch, instance, result: { featureResults: result.featureResults, failure: result.failure }, duration: new Date().getTime() - start };
+    } catch (e) {
+        return { ok: false, batch, instance, result: { failure: e }, duration: 0 };
+    }
 };
