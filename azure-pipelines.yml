@@ -9,54 +9,14 @@ stages:
   - job: Build
     steps:
     - checkout: self
-    - task: UseNode@1
-
-      inputs:
-        version: '18.x'
-    - script: |
-        npm install
-        npm run build
-        
-      displayName: 'Build and Package'
-    - task: ArchiveFiles@2
-      inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/deploy.zip'
-        replaceExistingArchive: true
-      displayName: Archive build
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)/deploy.zip'
-        artifact: 'deploy'
-        publishLocation: 'pipeline'
     
-
-
-- stage: Deploy
-
-  jobs:
-
-  - job: Deploy
-
-    steps:  
-    - checkout: none
-    - task: DownloadBuildArtifacts@1
+    - task: Docker@2
       inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'deploy'
-        downloadPath: '$(Build.SourcesDirectory)'
-      displayName: Download Artifacts
-    - task: AzureFunctionApp@2
-      inputs:
-        connectedServiceNameARM: 'dgcx_dev_appreg_serviceconnection_collab-resources'
-        appType: functionAppLinux
-        appName: 'dev-haibun-gccollab'
-        package: '$(Build.SourcesDirectory)/*.zip'
-        runtimeStack: 'NODE|18'
-        deploymentMethod: zipDeploy
-      displayName: 'Deploy to Azure Function App'
-    
+        containerRegistry: 'dgcx_dev_appreg_serviceconnection_docker_registry'
+        repository: 'withHaibunAZ'
+
+        tags: withHaibunAZPOC
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+      displayName: 'Build and push image'
     
