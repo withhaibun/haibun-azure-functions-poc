@@ -14,18 +14,19 @@ stages:
         version: '18.x'
     - script: |
         npm i azure-functions-core-tools@4 --unsafe-perm true
+        func azure functionapp publish haibunpoc3 -b remote
 
       displayName: 'Install Node modules'
 
-- stage: Deploy
-  jobs:
-  - job: Deploy
-    steps:
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'dgcx_dev_appreg_serviceconnection_collab-resources'
-        scriptType: pscore
-        scriptLocation: inlineScript
-        inlineScript: |
-          func azure functionapp publish haibunpoc3 -b remote
-      displayName: 'Deploy to Azure Function App'
+# - stage: Deploy
+#   jobs:
+#   - job: Deploy
+#     steps:
+#     - task: AzureCLI@2
+#       inputs:
+#         azureSubscription: 'dgcx_dev_appreg_serviceconnection_collab-resources'
+#         scriptType: pscore
+#         scriptLocation: inlineScript
+#         inlineScript: |
+#           func azure functionapp publish haibunpoc3 -b remote
+#       displayName: 'Deploy to Azure Function App'
