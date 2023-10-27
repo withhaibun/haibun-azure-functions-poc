@@ -4,19 +4,28 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: BuildAndPackage
+- stage: InstallNodeModules
   jobs:
   - job: Build
     steps:
     - checkout: self
-    
-    - task: Docker@2
+    - task: UseNode@1
       inputs:
-        containerRegistry: 'dgcx_dev_appreg_serviceconnection_docker_registry'
-        repository: 'withHaibunAZ'
+        version: '18.x'
+    - script: |
+        npm install
 
-        tags: withHaibunAZPOC
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-      displayName: 'Build and push image'
-    
+      displayName: 'Install Node modules'
+
+- stage: Deploy
+  jobs:
+  - job: Deploy
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'dgcx_dev_appreg_serviceconnection_collab-resources'
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: |
+          func azure functionapp publish haibunpoc3 -b remote
+      displayName: 'Deploy to Azure Function App'
