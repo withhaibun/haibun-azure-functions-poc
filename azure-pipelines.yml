@@ -13,7 +13,7 @@ stages:
       inputs:
         version: '18.x'
     - script: |
-        npm install
+        npm i azure-functions-core-tools@4 --unsafe-perm true
 
       displayName: 'Install Node modules'
 
