@@ -12,7 +12,7 @@ stages:
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'dgcx_dev_appreg_serviceconnection_collab-resources'
-        scriptType: pscore
+        scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
           npm i azure-functions-core-tools@4 --unsafe-perm true
