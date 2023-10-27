@@ -15,6 +15,6 @@ stages:
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
-          npm i azure-functions-core-tools@4 --unsafe-perm true
+          npm i -g azure-functions-core-tools@4 --unsafe-perm true
           func azure functionapp publish haibunpoc3 -b remote
       displayName: 'Deploy to Azure Function App'
